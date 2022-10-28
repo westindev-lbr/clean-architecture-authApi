@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "alabarre.Api", "alabarre.Api\alabarre.Api.csproj", "{FD2C324E-81D3-4638-BB56-F413D4AC3E3E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "alabarre.Application", "alabarre.Application\alabarre.Application.csproj", "{7B2F1677-64BF-4ECE-89BA-109236A982D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "alabarre.Contracts", "alabarre.Contracts\alabarre.Contracts.csproj", "{0B5CF517-C166-4FFE-BC11-E93DDCC9B68E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "alabarre.Domain", "alabarre.Domain\alabarre.Domain.csproj", "{9A44336B-562F-4210-9947-99ADD93E88FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "alabarre.Infrastructure", "alabarre.Infrastructure\alabarre.Infrastructure.csproj", "{520AB1C8-AA7E-42ED-9057-C17FC5709385}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "alabarre.Tests", "alabarre.Tests\alabarre.Tests.csproj", "{F066D742-1B74-4F0D-B17F-C7058A1A78A3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD2C324E-81D3-4638-BB56-F413D4AC3E3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD2C324E-81D3-4638-BB56-F413D4AC3E3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD2C324E-81D3-4638-BB56-F413D4AC3E3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD2C324E-81D3-4638-BB56-F413D4AC3E3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B2F1677-64BF-4ECE-89BA-109236A982D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B2F1677-64BF-4ECE-89BA-109236A982D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B2F1677-64BF-4ECE-89BA-109236A982D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B2F1677-64BF-4ECE-89BA-109236A982D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B5CF517-C166-4FFE-BC11-E93DDCC9B68E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B5CF517-C166-4FFE-BC11-E93DDCC9B68E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B5CF517-C166-4FFE-BC11-E93DDCC9B68E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B5CF517-C166-4FFE-BC11-E93DDCC9B68E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A44336B-562F-4210-9947-99ADD93E88FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A44336B-562F-4210-9947-99ADD93E88FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A44336B-562F-4210-9947-99ADD93E88FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A44336B-562F-4210-9947-99ADD93E88FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{520AB1C8-AA7E-42ED-9057-C17FC5709385}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{520AB1C8-AA7E-42ED-9057-C17FC5709385}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{520AB1C8-AA7E-42ED-9057-C17FC5709385}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{520AB1C8-AA7E-42ED-9057-C17FC5709385}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F066D742-1B74-4F0D-B17F-C7058A1A78A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F066D742-1B74-4F0D-B17F-C7058A1A78A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F066D742-1B74-4F0D-B17F-C7058A1A78A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F066D742-1B74-4F0D-B17F-C7058A1A78A3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
