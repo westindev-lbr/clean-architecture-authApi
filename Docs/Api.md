@@ -44,4 +44,4 @@ POST {{host}}/auth/register
 }
 ```
 
-Les 2 requetes doivent donc respecter un contrat
+Les 2 requetes doivent donc respecter un contrat.
