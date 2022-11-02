@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using alabarre.Api.Controllers;
+using alabarre.Application.Services.Authentication;
 using alabarre.Contracts.Authentication;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +15,9 @@ public class TestAuthenticationController
     public async Task Get_OnSuccess_ReturnsStatusCode200()
     {   
         // Arrange
-        var sut = new AuthController();
+        var mockUserService = new Mock<IAuthService>();
+
+        var sut = new AuthController(mockUserService.Object);
 
         // Act 
         // invocation de la méthode Get avec un cast en OkObjectResult de (Microsoft.AspNetCore.Mvc)
@@ -26,31 +29,45 @@ public class TestAuthenticationController
         result.StatusCode.Should().Be(200);
     }
 
-    [Fact]
-    public async Task Get_OnSuccess_Login()
-    {   
-        // Arrange
-        var sut = new AuthController();
+
+    [Fact(DisplayName = "Controller - Register retourne une AuthResponse")]
+    public async Task Get_OnSuccess_InvokesAuthServiceRegister(){
+
+        var mockUserService = new Mock<IAuthService>();
+        mockUserService
+            .Setup(service => service.Register(20006281, "toto@mail.fr", "John", "Doe", "toto"))
+            .Returns(new AuthResult(Guid.NewGuid(),"John","Doe","toto@mail.fr",20006281,"Token"));
         
-        string email = "toto@mail.fr";
-        string studentNum = "20006281";
-        string passwd = "toto";
- 
-        var req = new LoginRequest(email,studentNum,passwd);
-        // Act 
-        // invocation de la méthode Get avec un cast en OkObjectResult de (Microsoft.AspNetCore.Mvc)
-        var result = sut.Login(req);
-
-        // Assert 
-        // Should() est une méthode de FluentAssertions
-        result.Equals(req);
-    }
-
-    /* [Fact]
-    public async Task Get_OnSuccess_InvokesUserService(){
-        var mockUserService = Mock<IUserService>();
         var sut = new AuthController(mockUserService.Object);
-        var result = sut.Get(); 
-    } */
+
+        var req = new RegisterRequest("John", "Doe", "toto@mail.fr", 20006281, "toto");
+        var result = sut.Register(req); 
+        
+        result.Should().BeOfType<OkObjectResult>();
+        
+        var objectResult = (OkObjectResult)result;
+        Console.WriteLine("Register Object : " + objectResult.Value);
+        objectResult.Value.Should().BeOfType<AuthResponse>();
+    }
+    
+    [Fact(DisplayName = "Controller - Login retourne une AuthResponse")]
+    public async Task Get_OnSuccess_InvokesAuthServiceLogin(){
+
+        var mockUserService = new Mock<IAuthService>();
+        mockUserService
+            .Setup(service => service.Login(20006281, "toto@mail.fr", "toto"))
+            .Returns(new AuthResult(Guid.NewGuid(),"John","Doe","toto@mail.fr",20006281,"Token"));
+        
+        var sut = new AuthController(mockUserService.Object);
+
+        var req = new LoginRequest("toto@mail.fr", 20006281, "toto");
+        var result = sut.Login(req); 
+        
+        result.Should().BeOfType<OkObjectResult>();
+        
+        var objectResult = (OkObjectResult)result;
+        Console.WriteLine(objectResult.Value);
+        objectResult.Value.Should().BeOfType<AuthResponse>();
+    }
 
 }

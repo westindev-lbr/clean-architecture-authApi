@@ -4,6 +4,6 @@ public record RegisterRequest(
     string FirstName,
     string LastName,
     string Email,
-    string StudentNum,
+    int StudentNum,
     string Password
 );
