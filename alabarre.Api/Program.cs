@@ -6,14 +6,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 {
     // permet d'injecter l'ensemble des services de notre couche Application et Infrastructure
+    // Add services to the container.         
     builder.Services
         .AddApplication()
         .AddInfrastructure();
 
     builder.Services.AddControllers();
 }
-
-// Add services to the container.
 
 var app = builder.Build();
 
