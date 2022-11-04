@@ -5,7 +5,6 @@ using alabarre.Infrastructure;
 var builder = WebApplication.CreateBuilder(args);
 
 {
-    // permet d'injecter l'ensemble des services de notre couche Application et Infrastructure
     // Add services to the container.         
     builder.Services
         .AddApplication()

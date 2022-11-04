@@ -11,24 +11,6 @@ namespace alabarre.Tests.Systems.Controllers;
 
 public class TestAuthenticationController
 {
-    [Fact]
-    public async Task Get_OnSuccess_ReturnsStatusCode200()
-    {   
-        // Arrange
-        var mockUserService = new Mock<IAuthService>();
-
-        var sut = new AuthController(mockUserService.Object);
-
-        // Act 
-        // invocation de la méthode Get avec un cast en OkObjectResult de (Microsoft.AspNetCore.Mvc)
-        var result = (OkObjectResult)await sut.Get();
-
-        // Assert 
-        // StatusCode est un attribut d'un objet OkObjectResult 
-        // Should() est une méthode de FluentAssertions
-        result.StatusCode.Should().Be(200);
-    }
-
 
     [Fact(DisplayName = "Controller - Register retourne une AuthResponse")]
     public async Task Get_OnSuccess_InvokesAuthServiceRegister(){

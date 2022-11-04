@@ -2,12 +2,20 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using alabarre.Application.Intefaces.Authentication;
+using alabarre.Application.Intefaces.Utiles;
 using Microsoft.IdentityModel.Tokens;
 
 namespace alabarre.Infrastructure.Authentication;
 
 public class JwtTokenGenerator : IJwtTokenGenerator
 {
+
+    private readonly IDateTimeProvider _dateTimeProvider;
+    public JwtTokenGenerator(IDateTimeProvider dateTimeProvider)
+    {
+        _dateTimeProvider = dateTimeProvider;
+    }
+
     public string GenerateToken(Guid userId, string firstName, string lastName, int studentNum)
     {
 
@@ -28,7 +36,7 @@ public class JwtTokenGenerator : IJwtTokenGenerator
         // Configure le token avec nos 2 parties ; Signature & Payload ainsi que quelques paramètres en +
         var securityToken = new JwtSecurityToken(
             issuer: "alabarre-api-auth",
-            expires: DateTime.Now.AddHours(1),
+            expires: _dateTimeProvider.UtcNow.AddMinutes(60),
             claims: claims,
             signingCredentials: signingCredentials);
 

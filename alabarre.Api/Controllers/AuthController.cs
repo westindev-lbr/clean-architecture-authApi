@@ -59,8 +59,4 @@ public class AuthController : ControllerBase
         return Ok(response);
     }
 
-    [HttpGet(Name = "GetUsers")]
-    public async Task<IActionResult> Get() {
-        return Ok("All good");
-    }
 } 
