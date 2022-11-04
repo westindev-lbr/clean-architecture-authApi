@@ -4,6 +4,6 @@ namespace alabarre.Application.Intefaces.Authentication;
 public interface IJwtTokenGenerator {
 
     // Méthodes 
-    string GenerateToken(Guid userId, string email, string firstName, string lastName);
+    string GenerateToken(Guid userId, string firstName, string lastName, int studentNum);
     //
 }
