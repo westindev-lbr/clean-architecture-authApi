@@ -10,24 +10,30 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
 
 namespace alabarre.Infrastructure;
+
 public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(
         this IServiceCollection services,
-        ConfigurationManager configuration)
+        ConfigurationManager configuration
+    )
     {
+        services.AddDbContext<SqLiteDbContext>(options => options.UseSqlite(configuration.GetConnectionString("SqLiteDB")));
         services.AddAuth(configuration);
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddSingleton<IHashPassword, HashPassword>();
         return services;
     }
 
     public static IServiceCollection AddAuth(
         this IServiceCollection services,
-        ConfigurationManager configuration) {
-
+        ConfigurationManager configuration
+    )
+    {
         var jwtSettings = new JwtSettings();
         // Attache l'ensemble des attributs de la classe JwtSettings au paramètres de appSettings
         configuration.Bind(JwtSettings.SectionName, jwtSettings);
@@ -36,19 +42,24 @@ public static class DependencyInjection
         services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
 
         // JwtBearer Schema de defaut de l'authentificaton
-        services.AddAuthentication(defaultScheme: JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters{
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
-                ValidIssuer = jwtSettings.Issuer,
-                ValidAudience = jwtSettings.Audience,
-                IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(jwtSettings.Secret)
-                )
-            } );
-            
+        services
+            .AddAuthentication(defaultScheme: JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(
+                options =>
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = jwtSettings.Issuer,
+                        ValidAudience = jwtSettings.Audience,
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes(jwtSettings.Secret)
+                        )
+                    }
+            );
+
         return services;
     }
 }

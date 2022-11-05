@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace alabarre.Api.Controllers;
 
 [ApiController]
-[Route("auth")]
+[Route("api/auth")]
 public class AuthController : ControllerBase 
 {
     /* private readonly ILogger<AuthController> _logger;

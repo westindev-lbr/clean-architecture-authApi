@@ -10,17 +10,20 @@ public class AuthService : IAuthService
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
     private readonly IUserRepository _userRepository;
     private readonly IDateTimeProvider _dateTimeProvider;
+    private readonly IHashPassword _hashPassword;
 
     // Injection du service de génération de Jwt Token
     public AuthService(
         IJwtTokenGenerator jwtTokenGenerator,
         IUserRepository userRepository,
-        IDateTimeProvider dateTimeProvider
+        IDateTimeProvider dateTimeProvider,
+        IHashPassword hashPassword
     )
     {
         _jwtTokenGenerator = jwtTokenGenerator;
         _userRepository = userRepository;
         _dateTimeProvider = dateTimeProvider;
+        _hashPassword = hashPassword;
     }
 
     public AuthResult Login(string email, string password)
@@ -34,10 +37,15 @@ public class AuthService : IAuthService
         }
 
         // Vérifier mot de passe
-        if (user.Password != password)
+        if (user.Password != _hashPassword.HashPasswd($"{password}{user.Salt}"))
         {
             throw new Exception("Mot de passe invalide");
         }
+
+        user.LastLogin = _dateTimeProvider.UtcNow;
+        Console.WriteLine(user.LastLogin);
+        // Date dernière connexion
+        _userRepository.UpdateUser(user);
 
         // Creer le token
         var token = _jwtTokenGenerator.GenerateToken(user);
@@ -61,6 +69,13 @@ public class AuthService : IAuthService
             throw new Exception("Il semblerait qu'un utilisateur avec cet email existe déjà!");
         }
 
+        // Saler le mot de passe
+        var salt = _hashPassword.GenerateSalt(16);
+        // Hash de la concaténation du salt et du mot de passe
+        var hashedAndSaltPwd = _hashPassword.HashPasswd($"{password}{salt}");
+
+
+
         // Créer un utilisateur
         var user = new User
         {
@@ -68,16 +83,10 @@ public class AuthService : IAuthService
             LastName = lastName,
             Email = email,
             StudentNum = studentNum,
-            Password = password,
-            Salt = "salt",
+            Password = hashedAndSaltPwd,
+            Salt = salt,
             DateCreation = _dateTimeProvider.UtcNow
         };
-
-        // Hasher le mot de passe
-
-        // Saler le mot de passe
-
-        // Stocker la concaténation du salt et du mot de passe
 
         _userRepository.Add(user);
 

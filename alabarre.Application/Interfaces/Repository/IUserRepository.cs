@@ -7,4 +7,6 @@ public interface IUserRepository {
     User? GetUserByEmail(string email);
     // Ajoute un utilisateur
     void Add(User user);
+    List<User> GetAllUsers();
+    void UpdateUser(User user);
 }
