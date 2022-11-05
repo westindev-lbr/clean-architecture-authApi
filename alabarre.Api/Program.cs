@@ -17,7 +17,8 @@ var app = builder.Build();
 
 {
     app.UseHttpsRedirection();
-    app.UseAuthorization();
+    app.UseAuthentication(); // Détermine l'identité de l'utilisateur
+    app.UseAuthorization(); // Vérifie si l'utilisateur est autorisé à accéder au end-point
     app.MapControllers();
     app.Run();
 }

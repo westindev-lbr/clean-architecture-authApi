@@ -44,7 +44,6 @@ public class AuthController : ControllerBase
     [HttpPost("login")]
     public IActionResult Login(LoginRequest req){
         var authresult = _authService.Login(
-            req.StudentNum, 
             req.Email, 
             req.Password);
 

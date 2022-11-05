@@ -23,7 +23,7 @@ public class AuthService : IAuthService
         _dateTimeProvider = dateTimeProvider;
     }
 
-    public AuthResult Login(int studentNum, string email, string password)
+    public AuthResult Login(string email, string password)
     {
         // Verifier si l'utilisateur existe
         var user = _userRepository.GetUserByEmail(email);
