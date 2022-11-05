@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using alabarre.Application.Intefaces.Authentication;
 using alabarre.Application.Intefaces.Utiles;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace alabarre.Infrastructure.Authentication;
@@ -10,10 +11,12 @@ namespace alabarre.Infrastructure.Authentication;
 public class JwtTokenGenerator : IJwtTokenGenerator
 {
 
+    private readonly JwtSettings _jwtSettings;
     private readonly IDateTimeProvider _dateTimeProvider;
-    public JwtTokenGenerator(IDateTimeProvider dateTimeProvider)
+    public JwtTokenGenerator(IDateTimeProvider dateTimeProvider, IOptions<JwtSettings> jwtOptions)
     {
         _dateTimeProvider = dateTimeProvider;
+        _jwtSettings = jwtOptions.Value;
     }
 
     public string GenerateToken(Guid userId, string firstName, string lastName, int studentNum)
@@ -21,7 +24,7 @@ public class JwtTokenGenerator : IJwtTokenGenerator
 
         var signingCredentials = new SigningCredentials(
             // encodage de notre clé secrete de 16 bytes pour la signature avec notre clé secrete
-            new SymmetricSecurityKey(Encoding.UTF8.GetBytes("alabarre_#paris8")),
+            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret)),
             SecurityAlgorithms.HmacSha256);
 
         // Création des claims pour le payload de notre token
@@ -35,8 +38,9 @@ public class JwtTokenGenerator : IJwtTokenGenerator
 
         // Configure le token avec nos 2 parties ; Signature & Payload ainsi que quelques paramètres en +
         var securityToken = new JwtSecurityToken(
-            issuer: "alabarre-api-auth",
-            expires: _dateTimeProvider.UtcNow.AddMinutes(60),
+            issuer: _jwtSettings.Issuer,
+            audience: _jwtSettings.Audience,
+            expires: _dateTimeProvider.UtcNow.AddMinutes(_jwtSettings.ExpirationTimeMinutes),
             claims: claims,
             signingCredentials: signingCredentials);
 
