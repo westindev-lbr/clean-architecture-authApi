@@ -30,11 +30,11 @@ public class AuthController : ControllerBase
             req.Password);
 
         var response = new AuthResponse(
-            authresult.Id,
-            authresult.FirstName,
-            authresult.LastName,
-            authresult.Email,
-            authresult.StudentNum,
+            authresult.User.Id,
+            authresult.User.FirstName,
+            authresult.User.LastName,
+            authresult.User.Email,
+            authresult.User.StudentNum,
             authresult.Token);
         
 
@@ -49,11 +49,11 @@ public class AuthController : ControllerBase
             req.Password);
 
         var response = new AuthResponse(
-            authresult.Id,
-            authresult.FirstName,
-            authresult.LastName,
-            authresult.Email,
-            authresult.StudentNum,
+            authresult.User.Id,
+            authresult.User.FirstName,
+            authresult.User.LastName,
+            authresult.User.Email,
+            authresult.User.StudentNum,
             authresult.Token);
         
         return Ok(response);
