@@ -1,11 +1,13 @@
 using alabarre.Application.Services.Authentication;
 using alabarre.Contracts.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace alabarre.Api.Controllers;
 
 [ApiController]
 [Route("api/auth")]
+[AllowAnonymous]
 public class AuthController : ControllerBase 
 {
     /* private readonly ILogger<AuthController> _logger;

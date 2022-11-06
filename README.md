@@ -31,23 +31,25 @@ curl -X POST -H 'Content-Type: application/json' -d '{"email": "test@test.fr", "
 
 ```http
 GET {{host}}api/user/all
+Authorization: Bearer xxxxxxxx
+```
+xxxxxxxx -> *votre token*
+Afin de pouvoir accéder à la liste des étudiants il faut que l'api vérifie votre token lors de la requête http.
+Il faut donc que votre token soit présent dans le header.Authorization HTTP
+
+```curl
+curl -i https://localhost:7206/api/user/all -H "Authorization: Bearer xxxxxxxx..."
 ```
 
-```
-curl -i https://localhost:7206/api/user/all
-```
+### How to use :
 
+* Install .NET 6
+> https://dotnet.microsoft.com/en-us/download/dotnet/6.0
 
-### How to use : 
-
-Install .NET 6 
-https://dotnet.microsoft.com/en-us/download/dotnet/6.0
-
-
-```
+```shell
 dotnet build
 ```
 
-```
+```shell
 dotnet run --project alabarre.Api
 ```
